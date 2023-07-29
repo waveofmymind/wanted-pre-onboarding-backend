@@ -28,6 +28,12 @@ dependencies {
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // jwt token
+    implementation 'com.auth0:java-jwt:3.18.3'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'com.nimbusds:nimbus-jose-jwt:9.31'
+
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
