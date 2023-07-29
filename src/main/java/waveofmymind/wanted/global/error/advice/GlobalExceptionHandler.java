@@ -13,10 +13,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateJoinException.class)
     public ResponseEntity<ErrorResponse> duplicateJoinException(DuplicateJoinException e,
                                                                  HttpServletRequest request){
-        return createErrorResponse(e, request, ErrorCode.DUPLICATE_JOIN);
+        return createErrorResponse(ErrorCode.DUPLICATE_JOIN);
     }
 
-    private ResponseEntity<ErrorResponse> createErrorResponse(Exception e, HttpServletRequest request, ErrorCode errorCode) {
+    private ResponseEntity<ErrorResponse> createErrorResponse(ErrorCode errorCode) {
         return ErrorResponse.toResponseEntity(errorCode);
     }
 }
