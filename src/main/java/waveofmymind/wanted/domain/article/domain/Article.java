@@ -19,11 +19,11 @@ public class Article extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "제목은 빈칸일 수 없습니다.")
     @Column(name = "title", nullable = false)
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "내용은 빈칸일 수 없습니다.")
     @Column(name = "content", nullable = false)
     private String content;
 }

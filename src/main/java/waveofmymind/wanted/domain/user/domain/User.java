@@ -20,7 +20,7 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @NotNull
-    @Email
+    @Email(message = "올바른 이메일 형식이 아닙니다.")
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 

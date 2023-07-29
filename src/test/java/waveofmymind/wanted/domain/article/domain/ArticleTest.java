@@ -9,7 +9,7 @@ public class ArticleTest {
 
     @DisplayName("게시글이 생성된다.")
     @Test
-    void test() {
+    void articleTest() {
         // given
         Article article = Article.builder()
                 .title("제목")

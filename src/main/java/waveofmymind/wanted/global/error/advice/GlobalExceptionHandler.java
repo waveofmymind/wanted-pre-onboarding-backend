@@ -1,5 +1,6 @@
 package waveofmymind.wanted.global.error.advice;
 
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +11,8 @@ import waveofmymind.wanted.global.error.exception.InvalidPasswordException;
 import waveofmymind.wanted.global.error.exception.TokenVerifyFailedException;
 import waveofmymind.wanted.global.error.exception.UserNotFoundException;
 
+import java.util.Set;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -19,8 +22,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    protected ResponseEntity<ErrorResponse> constraintViolationValidation() {
-        return createErrorResponse(ErrorCode.INVALID_EMAIL_PARAMETER);
+    protected ResponseEntity<ErrorResponse> constraintViolationValidation(ConstraintViolationException e) {
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        String violationMessage = violations.iterator().next().getMessage();
+
+        return createErrorResponse(ErrorCode.INVALID_PARAMETER, violationMessage);
     }
 
     @ExceptionHandler(InvalidPasswordException.class)
@@ -39,5 +45,9 @@ public class GlobalExceptionHandler {
     }
     private ResponseEntity<ErrorResponse> createErrorResponse(ErrorCode errorCode) {
         return ErrorResponse.toResponseEntity(errorCode);
+    }
+
+    private ResponseEntity<ErrorResponse> createErrorResponse(ErrorCode errorCode, String message) {
+        return ErrorResponse.toResponseEntity(errorCode, message);
     }
 }
