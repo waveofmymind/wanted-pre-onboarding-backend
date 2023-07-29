@@ -2,9 +2,9 @@ package waveofmymind.wanted.domain.user.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import waveofmymind.wanted.global.error.exception.InvalidPasswordException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PasswordTest {
 
@@ -28,5 +28,15 @@ public class PasswordTest {
 
         // then
         assertNotEquals(password1.getValue(), password2.getValue());
+    }
+
+    @DisplayName("다른 패스워드는 다른 암호화 값을 생성한다")
+    @Test
+    void validateLength() {
+        // given
+        String plainText = "123456";
+
+        // when & then
+        assertThrowsExactly(InvalidPasswordException.class, () -> new Password(plainText));
     }
 }

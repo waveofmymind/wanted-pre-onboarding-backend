@@ -12,6 +12,7 @@ import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import waveofmymind.wanted.global.error.exception.InvalidPasswordException;
 import waveofmymind.wanted.global.security.PasswordEncryptor;
 
 import java.io.IOException;
@@ -26,9 +27,15 @@ public class Password {
     private String value;
 
     public Password(String value) {
+        validate(value);
         this.value = PasswordEncryptor.sha256Encrypt(value);
     }
 
+    public void validate(String value) {
+        if (value.length() < 8) {
+            throw new InvalidPasswordException();
+        }
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
