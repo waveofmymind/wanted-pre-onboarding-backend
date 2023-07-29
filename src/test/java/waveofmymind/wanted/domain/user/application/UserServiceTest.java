@@ -10,12 +10,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import waveofmymind.wanted.domain.user.domain.User;
-import waveofmymind.wanted.domain.user.infrastructure.JoinUserCommand;
+import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
+import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
 import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
 import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
+import waveofmymind.wanted.global.error.exception.UnIdentifiedUserException;
+import waveofmymind.wanted.global.error.exception.UserNotFoundException;
+import waveofmymind.wanted.global.jwt.JwtTokenProvider;
+import waveofmymind.wanted.global.jwt.LoginToken;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doAnswer;
 import static waveofmymind.wanted.domain.user.UserFixture.*;
@@ -23,6 +31,8 @@ import static waveofmymind.wanted.domain.user.UserFixture.*;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
+    @Mock
+    private JwtTokenProvider jwtTokenProvider;
     @Mock
     private UserRepository userRepository;
 
@@ -51,12 +61,49 @@ public class UserServiceTest {
 
     @DisplayName("중복된 이메일로 가입하는 경우 예외가 발생한다.")
     @Test
-    void test() {
+    void invalidEmail() {
         //given
         JoinUserCommand command = joinUserCommand();
         given(userRepository.checkDuplicateEmail(command.email())).willReturn(true);
         //when
         assertThatThrownBy(() -> userService.joinUser(command))
                 .isInstanceOf(DuplicateJoinException.class);
+    }
+
+    @DisplayName("올바른 이메일과 패스워드로 로그인이 성공한다.")
+    @Test
+    void login() {
+        //given
+        LoginUserRequest request = loginUserRequest();
+        User user = user();
+        given(userRepository.getUserByEmail(request.email())).willReturn(Optional.of(user));
+        given(jwtTokenProvider.createLoginToken(any(User.class))).willReturn(loginToken());
+        //when
+        LoginToken response = userService.loginUser(request.toCommand());
+        //then
+        assertThat(response.accessToken()).startsWith("Bearer ");
+    }
+
+    @DisplayName("존재하지 않는 이메일로 로그인을 시도하는 경우 예외가 발생한다.")
+    @Test
+    void invalidEmailLogin() {
+        //given
+        LoginUserRequest request = loginUserRequest();
+        given(userRepository.getUserByEmail(request.email())).willReturn(Optional.empty());
+        //when
+        assertThatThrownBy(() -> userService.loginUser(request.toCommand()))
+                .isInstanceOf(UserNotFoundException.class);
+    }
+
+    @DisplayName("올바르지 않은 패스워드로 로그인을 시도하는 경우 예외가 발생한다.")
+    @Test
+    void invalidPasswordLogin() {
+        //given
+        LoginUserRequest request = loginUserRequest();
+        User user = invalidUser();
+        given(userRepository.getUserByEmail(request.email())).willReturn(Optional.of(user));
+        //when
+        assertThatThrownBy(() -> userService.loginUser(request.toCommand()))
+                .isInstanceOf(UnIdentifiedUserException.class);
     }
 }

@@ -3,7 +3,6 @@ package waveofmymind.wanted.domain.user.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import waveofmymind.wanted.domain.user.domain.User;
-import waveofmymind.wanted.global.error.exception.UserNotFoundException;
 
 import java.util.Optional;
 

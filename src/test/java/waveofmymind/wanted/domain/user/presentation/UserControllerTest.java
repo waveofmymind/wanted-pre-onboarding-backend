@@ -7,8 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import waveofmymind.wanted.domain.ControllerTest;
 import waveofmymind.wanted.domain.user.UserFixture;
+import waveofmymind.wanted.domain.user.dto.request.JoinUserRequest;
+import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
 import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 import waveofmymind.wanted.global.error.exception.InvalidPasswordException;
+import waveofmymind.wanted.global.error.exception.UserNotFoundException;
+
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -16,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserControllerTest extends ControllerTest {
 
-    @DisplayName("이메일과 패스워드로 회원가입이 성공한다.")
+    @DisplayName("회원가입 성공 API 테스트")
     @Test
     void joinSuccessTest() throws Exception {
         //given
@@ -30,7 +34,7 @@ public class UserControllerTest extends ControllerTest {
         verify(userService).joinUser(request.toCommand());
     }
 
-    @DisplayName("회원가입시 패스워드 길이가 8자리 미만일 경우 예외가 발생한다.")
+    @DisplayName("회원가입시 패스워드 형식 예외 테스트")
     @Test
     void invalidPasswordTest() throws Exception {
         //given
@@ -45,7 +49,7 @@ public class UserControllerTest extends ControllerTest {
         verify(userService).joinUser(request.toCommand());
     }
 
-    @DisplayName("회원가입시 이메일 형식이 맞지 않을 경우 예외가 발생한다.")
+    @DisplayName("회원가입시 이메일 형식 예외 테스트")
     @Test
     void invalidEmailTest() throws Exception {
         //given
@@ -60,7 +64,7 @@ public class UserControllerTest extends ControllerTest {
         verify(userService).joinUser(request.toCommand());
     }
 
-    @DisplayName("이미 가입된 이메일인 경우 예외가 발생한다.")
+    @DisplayName("회원가입 중복 이메일 예외 테스트")
     @Test
     void duplicateEmailTest() throws Exception {
         //given
@@ -73,6 +77,50 @@ public class UserControllerTest extends ControllerTest {
                 .andExpect(status().isBadRequest());
 
         verify(userService).joinUser(request.toCommand());
+    }
+
+    @DisplayName("로그인 성공 API 테스트")
+    @Test
+    void loginSuccessTest() throws Exception {
+        //given
+        LoginUserRequest request = UserFixture.loginUserRequest();
+        //when
+        mockMvc.perform(post("/users/login")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(userService).loginUser(request.toCommand());
+    }
+
+    @DisplayName("로그인시 미가입 이메일 예외 테스트")
+    @Test
+    void notJoinedEmailTest() throws Exception {
+        //given
+        LoginUserRequest request = UserFixture.loginUserRequest();
+        doThrow(new UserNotFoundException()).when(userService).loginUser(request.toCommand());
+        //when
+        mockMvc.perform(post("/users/login")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        verify(userService).loginUser(request.toCommand());
+    }
+
+    @DisplayName("로그인시 패스워드 불일치 예외 테스트")
+    @Test
+    void invalidPasswordLoginTest() throws Exception {
+        //given
+        LoginUserRequest request = UserFixture.loginUserRequest();
+        doThrow(new InvalidPasswordException()).when(userService).loginUser(request.toCommand());
+        //when
+        mockMvc.perform(post("/users/login")
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+
+        verify(userService).loginUser(request.toCommand());
     }
 
 }
