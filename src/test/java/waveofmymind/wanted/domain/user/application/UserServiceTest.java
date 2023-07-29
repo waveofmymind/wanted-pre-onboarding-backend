@@ -12,11 +12,13 @@ import org.springframework.test.util.ReflectionTestUtils;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.infrastructure.JoinUserCommand;
 import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
+import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doAnswer;
 import static waveofmymind.wanted.domain.user.UserFixture.*;
-
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -28,8 +30,8 @@ public class UserServiceTest {
     private UserServiceImpl userService;
 
     @Test
-    @DisplayName("회원 가입")
-    void join()  {
+    @DisplayName("회원 가입이 성공한다.")
+    void join() {
         //given
         JoinUserCommand command = joinUserCommand();
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
@@ -45,5 +47,16 @@ public class UserServiceTest {
         //then
         User savedUser = userCaptor.getValue();
         assertThat(savedUser.getId()).isEqualTo(1L);
+    }
+
+    @DisplayName("중복된 이메일로 가입하는 경우 예외가 발생한다.")
+    @Test
+    void test() {
+        //given
+        JoinUserCommand command = joinUserCommand();
+        given(userRepository.checkDuplicateEmail(command.email())).willReturn(true);
+        //when
+        assertThatThrownBy(() -> userService.joinUser(command))
+                .isInstanceOf(DuplicateJoinException.class);
     }
 }
