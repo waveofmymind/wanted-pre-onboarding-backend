@@ -1,13 +1,12 @@
 package waveofmymind.wanted.domain.article.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.article.application.ArticleService;
 import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
+import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.auth.AuthCheck;
+import waveofmymind.wanted.global.auth.UserContext;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +17,14 @@ public class ArticleController {
     @AuthCheck
     @PostMapping
     public Long register(@RequestBody RegisterArticleRequest request) {
-        return articleService.registerArticle(request.toCommand());
+        User user = UserContext.currentUser.get();
+        return articleService.registerArticle(request.toCommand(user.getId()));
+    }
+
+    @AuthCheck
+    @PutMapping("/{articleId}")
+    public Long edit(@PathVariable Long articleId, @RequestBody EditArticleRequest request) {
+        User user = UserContext.currentUser.get();
+        return articleService.editArticle(request.toEditCommand(articleId, user.getId()));
     }
 }

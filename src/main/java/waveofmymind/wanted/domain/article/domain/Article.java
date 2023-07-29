@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import waveofmymind.wanted.global.domain.BaseTimeEntity;
+import waveofmymind.wanted.global.error.exception.UnAuthorizedException;
+import java.util.Objects;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -28,4 +31,15 @@ public class Article extends BaseTimeEntity {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    public void edit(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public void validate(Long userId) {
+        if (!Objects.equals(this.userId, userId)) {
+            throw new UnAuthorizedException();
+        }
+    }
 }
