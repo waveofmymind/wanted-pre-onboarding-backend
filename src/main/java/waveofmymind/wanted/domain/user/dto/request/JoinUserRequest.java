@@ -1,8 +1,8 @@
-package waveofmymind.wanted.domain.user.presentation;
+package waveofmymind.wanted.domain.user.dto.request;
 
 import lombok.Builder;
 import waveofmymind.wanted.domain.user.domain.Password;
-import waveofmymind.wanted.domain.user.infrastructure.JoinUserCommand;
+import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
 
 public record JoinUserRequest(
         String email,
