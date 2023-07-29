@@ -1,6 +1,8 @@
 package waveofmymind.wanted.domain.user.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import waveofmymind.wanted.global.error.exception.UnIdentifiedUserException;
 
@@ -16,7 +18,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
+    @NotNull
+    @Email
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
