@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import waveofmymind.wanted.global.domain.BaseTimeEntity;
 import waveofmymind.wanted.global.error.exception.UnIdentifiedUserException;
 
 @Builder
@@ -12,7 +13,7 @@ import waveofmymind.wanted.global.error.exception.UnIdentifiedUserException;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +21,10 @@ public class User {
 
     @NotNull
     @Email
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private Password password;
 
     public void authenticate(Password password) {
