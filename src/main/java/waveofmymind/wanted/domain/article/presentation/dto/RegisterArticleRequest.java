@@ -11,8 +11,9 @@ public record RegisterArticleRequest(
     public RegisterArticleRequest {
     }
 
-    public RegisterArticleCommand toCommand() {
+    public RegisterArticleCommand toCommand(Long userId) {
         return RegisterArticleCommand.builder()
+                .userId(userId)
                 .title(title)
                 .content(content)
                 .build();
