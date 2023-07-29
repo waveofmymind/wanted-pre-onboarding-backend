@@ -3,16 +3,13 @@ package waveofmymind.wanted.domain.article.application;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
+import waveofmymind.wanted.domain.ServiceTest;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
 import waveofmymind.wanted.domain.article.application.dto.RegisterArticleCommand;
 import waveofmymind.wanted.domain.article.domain.Article;
-import waveofmymind.wanted.domain.article.infrastructure.ArticleRepository;
+import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.error.exception.ArticleNotFoundException;
 import waveofmymind.wanted.global.error.exception.UnAuthorizedException;
 
@@ -22,18 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static waveofmymind.wanted.domain.article.ArticleFixture.*;
+import static waveofmymind.wanted.domain.user.UserFixture.user;
 
-@ExtendWith(MockitoExtension.class)
-public class ArticleServiceTest {
-
-    @Mock
-    private ArticleRepository articleRepository;
-
-    @InjectMocks
-    private ArticleServiceImpl articleService;
+public class ArticleServiceTest extends ServiceTest {
 
     @DisplayName("제목과 내용으로 게시글이 저장된다.")
     @Test
@@ -144,5 +134,32 @@ public class ArticleServiceTest {
         verify(articleRepository).findArticleById(any(Long.class));
     }
 
+    @DisplayName("id로 게시글을 조회한다.")
+    @Test
+    void findArticleTest() {
+        // given
+        Long articleId = 1L;
+        Long userId = 1L;
+        Article article = article();
+        User user = user();
+        given(articleRepository.findArticleById(any(Long.class))).willReturn(Optional.of(article));
+        given(userRepository.getUserById(any(Long.class))).willReturn(Optional.of(user));
+        // when
+        articleService.findArticle(articleId);
+        // then
+        verify(articleRepository).findArticleById(any(Long.class));
+        verify(userRepository).getUserById(eq(userId));
+    }
 
+    @DisplayName("id로 게시글을 조회할 때 게시글이 없으면 예외가 발생한다.")
+    @Test
+    void findNonExistArticleTest() {
+        // given
+        Long articleId = 1L;
+        given(articleRepository.findArticleById(any(Long.class))).willReturn(Optional.empty());
+        // when & then
+        assertThatThrownBy(() -> articleService.findArticle(articleId))
+                .isInstanceOf(ArticleNotFoundException.class);
+        verify(articleRepository).findArticleById(any(Long.class));
+    }
 }

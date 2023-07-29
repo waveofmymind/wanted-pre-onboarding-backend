@@ -24,6 +24,7 @@ public class ArticleFixture {
 
     public static Article article() {
         return Article.builder()
+                .id(1L)
                 .userId(1L)
                 .title("title")
                 .content("content")
