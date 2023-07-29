@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.error.exception.UserNotFoundException;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
@@ -22,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userJpaRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+    public Optional<User> getUserByEmail(String email) {
+        return userJpaRepository.findByEmail(email);
     }
 }

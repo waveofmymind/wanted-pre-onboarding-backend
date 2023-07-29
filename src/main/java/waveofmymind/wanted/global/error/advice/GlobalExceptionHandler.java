@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import waveofmymind.wanted.global.error.ErrorCode;
 import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 import waveofmymind.wanted.global.error.exception.InvalidPasswordException;
+import waveofmymind.wanted.global.error.exception.UserNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,6 +26,13 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> invalidPasswordException() {
         return createErrorResponse(ErrorCode.INVALID_PASSWORD_PARAMETER);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> userNotFoundException() {
+        return createErrorResponse(ErrorCode.USER_NOT_FOUND);
+    }
+
+
 
     private ResponseEntity<ErrorResponse> createErrorResponse(ErrorCode errorCode) {
         return ErrorResponse.toResponseEntity(errorCode);

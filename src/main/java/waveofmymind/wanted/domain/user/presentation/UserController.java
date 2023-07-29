@@ -4,8 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.user.application.UserService;
-import waveofmymind.wanted.domain.user.infrastructure.JoinUserCommand;
-import waveofmymind.wanted.domain.user.infrastructure.LoginUserCommand;
+import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
+import waveofmymind.wanted.domain.user.application.dto.LoginUserCommand;
+import waveofmymind.wanted.domain.user.dto.request.JoinUserRequest;
+import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
+import waveofmymind.wanted.global.jwt.LoginToken;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,8 +23,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void login(@Valid @RequestBody LoginUserRequest request) {
+    public LoginToken login(@Valid @RequestBody LoginUserRequest request) {
         LoginUserCommand command = request.toCommand();
-        userService.loginUser(command);
+        return userService.loginUser(command);
     }
 }
