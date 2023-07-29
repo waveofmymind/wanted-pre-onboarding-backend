@@ -1,8 +1,7 @@
-package waveofmymind.wanted.domain.article.presentation;
+package waveofmymind.wanted.domain.article.presentation.dto;
 
 import lombok.Builder;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
-import waveofmymind.wanted.domain.user.domain.User;
 
 public record EditArticleRequest(
         String title,
