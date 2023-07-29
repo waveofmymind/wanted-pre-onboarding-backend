@@ -1,6 +1,7 @@
 package waveofmymind.wanted.domain.article.application;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
@@ -11,6 +12,9 @@ import waveofmymind.wanted.domain.user.application.UserService;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
 import waveofmymind.wanted.domain.user.application.dto.FindUserResponse;
 import waveofmymind.wanted.global.error.exception.ArticleNotFoundException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +31,21 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public FindArticleResponse findArticle(Long articleId) {
+    public FindArticleResponse getArticle(Long articleId) {
         Article article = articleRepository.findArticleById(articleId)
                 .orElseThrow(ArticleNotFoundException::new);
         FindUserResponse response = userService.findUser(article.getUserId());
         return FindArticleResponse.from(article, response.email());
+    }
+
+    @Override
+    public List<FindArticleResponse> getArticleList(Pageable page) {
+        return articleRepository.findArticleList(page).stream()
+                .map(article -> {
+                    FindUserResponse response = userService.findUser(article.getUserId());
+                    return FindArticleResponse.from(article, response.email());
+                })
+                .collect(Collectors.toList());
     }
 
     @Transactional

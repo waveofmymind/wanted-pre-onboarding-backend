@@ -4,15 +4,19 @@ import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 import waveofmymind.wanted.domain.ServiceTest;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
+import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
 import waveofmymind.wanted.domain.article.application.dto.RegisterArticleCommand;
 import waveofmymind.wanted.domain.article.domain.Article;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.error.exception.ArticleNotFoundException;
 import waveofmymind.wanted.global.error.exception.UnAuthorizedException;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -145,7 +149,7 @@ public class ArticleServiceTest extends ServiceTest {
         given(articleRepository.findArticleById(any(Long.class))).willReturn(Optional.of(article));
         given(userRepository.getUserById(any(Long.class))).willReturn(Optional.of(user));
         // when
-        articleService.findArticle(articleId);
+        articleService.getArticle(articleId);
         // then
         verify(articleRepository).findArticleById(any(Long.class));
         verify(userRepository).getUserById(eq(userId));
@@ -158,8 +162,22 @@ public class ArticleServiceTest extends ServiceTest {
         Long articleId = 1L;
         given(articleRepository.findArticleById(any(Long.class))).willReturn(Optional.empty());
         // when & then
-        assertThatThrownBy(() -> articleService.findArticle(articleId))
+        assertThatThrownBy(() -> articleService.getArticle(articleId))
                 .isInstanceOf(ArticleNotFoundException.class);
         verify(articleRepository).findArticleById(any(Long.class));
+    }
+
+    @DisplayName("게시글 목록을 조회한다.")
+    @Test
+    void getArticleList() {
+        // given
+        List<Article> articles = articleList();
+        given(articleRepository.findArticleList(any(Pageable.class))).willReturn(articles);
+        given(userRepository.getUserById(any(Long.class))).willReturn(Optional.of(user()));
+        // when
+        List<FindArticleResponse> result = articleService.getArticleList(PageRequest.of(0, 10));
+        // then
+        assertThat(result.size()).isEqualTo(articles.size());
+        verify(articleRepository).findArticleList(any(Pageable.class));
     }
 }

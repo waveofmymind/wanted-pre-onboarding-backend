@@ -1,8 +1,11 @@
 package waveofmymind.wanted.domain.article.application;
 
+import org.springframework.data.domain.Pageable;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
 import waveofmymind.wanted.domain.article.application.dto.RegisterArticleCommand;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
+
+import java.util.List;
 
 public interface ArticleService {
 
@@ -12,5 +15,7 @@ public interface ArticleService {
 
     Long deleteArticle(Long articleId, Long userId);
 
-    FindArticleResponse findArticle(Long articleId);
+    FindArticleResponse getArticle(Long articleId);
+
+    List<FindArticleResponse> getArticleList(Pageable page);
 }
