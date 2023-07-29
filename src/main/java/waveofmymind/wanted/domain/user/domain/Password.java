@@ -1,6 +1,5 @@
 package waveofmymind.wanted.domain.user.domain;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -16,6 +15,7 @@ import lombok.NoArgsConstructor;
 import waveofmymind.wanted.global.security.PasswordEncryptor;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Getter
 @Embeddable
@@ -27,6 +27,19 @@ public class Password {
 
     public Password(String value) {
         this.value = PasswordEncryptor.sha256Encrypt(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Password password = (Password) o;
+        return Objects.equals(value, password.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     public static class PasswordSerializer extends JsonSerializer<Password> {
