@@ -17,6 +17,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean checkDuplicateEmail(String email) {
+        return userJpaRepository.existsByEmail(email);
+    }
+
+    @Override
     public User getUserByEmail(String email) {
         return userJpaRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }

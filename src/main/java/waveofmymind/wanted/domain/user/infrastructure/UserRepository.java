@@ -6,5 +6,7 @@ public interface UserRepository {
 
     void registerUser(User user);
 
+    boolean checkDuplicateEmail(String email);
+
     User getUserByEmail(String email);
 }

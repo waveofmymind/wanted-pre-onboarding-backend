@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.infrastructure.JoinUserCommand;
+import waveofmymind.wanted.domain.user.infrastructure.LoginUserCommand;
 import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
+import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void joinUser(JoinUserCommand command) {
+        if(userRepository.checkDuplicateEmail(command.email())){
+            throw new DuplicateJoinException();
+        }
         User user = command.toEntity();
         userRepository.registerUser(user);
     }

@@ -36,7 +36,7 @@ public class UserServiceTest {
         doAnswer((invocation) -> {
             User argument = invocation.getArgument(0);
             ReflectionTestUtils.setField(argument, "id", 1L);
-            return null;
+            return argument;
         }).when(userRepository).registerUser(userCaptor.capture());
 
         //when
