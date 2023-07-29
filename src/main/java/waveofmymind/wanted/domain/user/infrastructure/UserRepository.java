@@ -11,4 +11,6 @@ public interface UserRepository {
     boolean checkDuplicateEmail(String email);
 
     Optional<User> getUserByEmail(String email);
+
+    Optional<User> getUserById(Long userId);
 }

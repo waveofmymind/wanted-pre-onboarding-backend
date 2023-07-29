@@ -1,8 +1,10 @@
 package waveofmymind.wanted.domain.article.presentation;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.article.application.ArticleService;
+import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
 import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.auth.AuthCheck;
@@ -33,5 +35,10 @@ public class ArticleController {
     public Long delete(@PathVariable Long articleId) {
         User user = UserContext.currentUser.get();
         return articleService.deleteArticle(articleId, user.getId());
+    }
+
+    @GetMapping("/{articleId}")
+    public FindArticleResponse findArticle(@PathVariable Long articleId) {
+        return articleService.findArticle(articleId);
     }
 }
