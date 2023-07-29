@@ -9,4 +9,6 @@ public interface ArticleRepository {
     Article saveArticle(Article article);
 
     Optional<Article> findArticleById(Long id);
+
+    void deleteArticle(Long articleId);
 }

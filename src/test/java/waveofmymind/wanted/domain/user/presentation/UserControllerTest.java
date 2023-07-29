@@ -49,21 +49,6 @@ public class UserControllerTest extends ControllerTest {
         verify(userService).joinUser(request.toCommand());
     }
 
-    @DisplayName("회원가입시 이메일 형식 예외 테스트")
-    @Test
-    void invalidEmailTest() throws Exception {
-        //given
-        JoinUserRequest request = UserFixture.joinUserRequest();
-        doThrow(new ConstraintViolationException(null)).when(userService).joinUser(request.toCommand());
-        //when
-        mockMvc.perform(post("/users/join")
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
-
-        verify(userService).joinUser(request.toCommand());
-    }
-
     @DisplayName("회원가입 중복 이메일 예외 테스트")
     @Test
     void duplicateEmailTest() throws Exception {

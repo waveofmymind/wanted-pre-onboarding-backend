@@ -20,4 +20,9 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     public Optional<Article> findArticleById(Long id) {
         return articleJpaRepository.findById(id);
     }
+
+    @Override
+    public void deleteArticle(Long articleId) {
+        articleJpaRepository.deleteById(articleId);
+    }
 }

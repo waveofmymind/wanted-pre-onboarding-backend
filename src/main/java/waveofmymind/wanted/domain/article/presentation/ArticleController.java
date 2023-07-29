@@ -27,4 +27,11 @@ public class ArticleController {
         User user = UserContext.currentUser.get();
         return articleService.editArticle(request.toEditCommand(articleId, user.getId()));
     }
+
+    @AuthCheck
+    @DeleteMapping("/{articleId}")
+    public Long delete(@PathVariable Long articleId) {
+        User user = UserContext.currentUser.get();
+        return articleService.deleteArticle(articleId, user.getId());
+    }
 }

@@ -22,6 +22,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Long registerArticle(RegisterArticleCommand command) {
         return articleRepository.saveArticle(command.toEntity()).getId();
     }
+
     @Transactional
     @Override
     public Long editArticle(EditArticleCommand command) {
@@ -30,5 +31,14 @@ public class ArticleServiceImpl implements ArticleService {
         article.validate(command.userId());
         article.edit(command.title(), command.content());
         return command.articleId();
+    }
+
+    @Override
+    public Long deleteArticle(Long articleId, Long userId) {
+        Article article = articleRepository.findArticleById(articleId)
+                .orElseThrow(ArticleNotFoundException::new);
+        article.validate(userId);
+        articleRepository.deleteArticle(articleId);
+        return articleId;
     }
 }

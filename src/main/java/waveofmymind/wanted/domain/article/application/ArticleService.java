@@ -8,4 +8,6 @@ public interface ArticleService {
     Long registerArticle(RegisterArticleCommand command);
 
     Long editArticle(EditArticleCommand command);
+
+    Long deleteArticle(Long articleId, Long userId);
 }
