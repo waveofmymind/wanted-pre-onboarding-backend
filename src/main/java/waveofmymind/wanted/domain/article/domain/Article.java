@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import waveofmymind.wanted.global.domain.BaseTimeEntity;
-
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -26,4 +25,7 @@ public class Article extends BaseTimeEntity {
     @NotBlank(message = "내용은 빈칸일 수 없습니다.")
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 }
