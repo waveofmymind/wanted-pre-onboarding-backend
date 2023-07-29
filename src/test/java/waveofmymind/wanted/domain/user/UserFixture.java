@@ -26,4 +26,10 @@ public class UserFixture {
     }
 
 
+    public static JoinUserRequest joinUserRequest() {
+        return JoinUserRequest.builder()
+                .email("test@test.com")
+                .password("12345678")
+                .build();
+    }
 }

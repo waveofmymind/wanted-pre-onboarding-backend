@@ -6,13 +6,13 @@ import waveofmymind.wanted.domain.user.infrastructure.JoinUserCommand;
 
 public record JoinUserRequest(
         String email,
-        Password password
+        String password
 ) {
     @Builder
     public JoinUserRequest {
     }
 
     public JoinUserCommand toCommand() {
-        return new JoinUserCommand(email, password);
+        return new JoinUserCommand(email, new Password(password));
     }
 }
