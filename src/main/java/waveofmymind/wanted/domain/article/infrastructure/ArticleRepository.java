@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface ArticleRepository {
 
-    void saveArticle(Article article);
+    Article saveArticle(Article article);
 
     Optional<Article> findArticleById(Long id);
 }
