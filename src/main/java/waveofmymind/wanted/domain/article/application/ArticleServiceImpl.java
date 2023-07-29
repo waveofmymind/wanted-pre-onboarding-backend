@@ -34,6 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public Long deleteArticle(Long articleId, Long userId) {
         Article article = articleRepository.findArticleById(articleId)
                 .orElseThrow(ArticleNotFoundException::new);
