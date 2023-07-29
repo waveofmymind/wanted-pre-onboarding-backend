@@ -4,5 +4,5 @@ import waveofmymind.wanted.domain.article.application.dto.RegisterArticleCommand
 
 public interface ArticleService {
 
-    void saveArticle(RegisterArticleCommand command);
+    Long registerArticle(RegisterArticleCommand command);
 }

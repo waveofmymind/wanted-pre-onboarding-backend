@@ -17,7 +17,7 @@ public class ArticleController {
 
     @AuthCheck
     @PostMapping
-    public void register(@RequestBody RegisterArticleRequest request) {
-        articleService.saveArticle(request.toCommand());
+    public Long register(@RequestBody RegisterArticleRequest request) {
+        return articleService.registerArticle(request.toCommand());
     }
 }

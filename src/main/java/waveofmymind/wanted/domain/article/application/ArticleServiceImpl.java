@@ -11,7 +11,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
     @Override
-    public void saveArticle(RegisterArticleCommand command) {
-        articleRepository.saveArticle(command.toEntity());
+    public Long registerArticle(RegisterArticleCommand command) {
+        return articleRepository.saveArticle(command.toEntity()).getId();
     }
 }
