@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
 import waveofmymind.wanted.global.error.exception.TokenVerifyFailedException;
 import waveofmymind.wanted.global.jwt.JwtVerifier;
@@ -31,7 +32,8 @@ public class AuthCheckAspect {
         String token = authorizationHeader.replace(AuthConstants.TOKEN_PREFIX.getValue(), "");
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         String email = decodedJWT.getSubject();
-        userRepository.getUserByEmail(email).orElseThrow(TokenVerifyFailedException::new);
+        User user = userRepository.getUserByEmail(email).orElseThrow(TokenVerifyFailedException::new);
+        UserContext.currentUser.set(user);
         return pjp.proceed();
     }
 }
