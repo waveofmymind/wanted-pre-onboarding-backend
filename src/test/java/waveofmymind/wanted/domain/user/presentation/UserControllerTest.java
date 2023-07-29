@@ -9,8 +9,7 @@ import waveofmymind.wanted.domain.ControllerTest;
 import waveofmymind.wanted.domain.user.UserFixture;
 import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 import waveofmymind.wanted.global.error.exception.InvalidPasswordException;
-
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,7 +35,7 @@ public class UserControllerTest extends ControllerTest {
     void invalidPasswordTest() throws Exception {
         //given
         JoinUserRequest request = UserFixture.joinUserRequest();
-        given(userService.joinUser(request.toCommand())).willThrow(new InvalidPasswordException());
+        doThrow(new InvalidPasswordException()).when(userService).joinUser(request.toCommand());
         //when
         mockMvc.perform(post("/users/join")
                         .content(objectMapper.writeValueAsString(request))
@@ -51,7 +50,7 @@ public class UserControllerTest extends ControllerTest {
     void invalidEmailTest() throws Exception {
         //given
         JoinUserRequest request = UserFixture.joinUserRequest();
-        given(userService.joinUser(request.toCommand())).willThrow(new ConstraintViolationException(null));
+        doThrow(new ConstraintViolationException(null)).when(userService).joinUser(request.toCommand());
         //when
         mockMvc.perform(post("/users/join")
                         .content(objectMapper.writeValueAsString(request))
@@ -66,7 +65,7 @@ public class UserControllerTest extends ControllerTest {
     void duplicateEmailTest() throws Exception {
         //given
         JoinUserRequest request = UserFixture.joinUserRequest();
-        given(userService.joinUser(request.toCommand())).willThrow(new DuplicateJoinException());
+        doThrow(new DuplicateJoinException()).when(userService).joinUser(request.toCommand());
         //when
         mockMvc.perform(post("/users/join")
                         .content(objectMapper.writeValueAsString(request))

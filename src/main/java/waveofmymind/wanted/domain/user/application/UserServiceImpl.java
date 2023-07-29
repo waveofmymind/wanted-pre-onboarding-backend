@@ -18,10 +18,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void joinUser(JoinUserCommand command) {
-        if(userRepository.checkDuplicateEmail(command.email())){
+        if (userRepository.checkDuplicateEmail(command.email())) {
             throw new DuplicateJoinException();
         }
         User user = command.toEntity();
         userRepository.registerUser(user);
+    }
+
+    @Override
+    public void loginUser(LoginUserCommand command) {
+        User user = userRepository.getUserByEmail(command.email());
+        user.authenticate(command.password());
     }
 }
