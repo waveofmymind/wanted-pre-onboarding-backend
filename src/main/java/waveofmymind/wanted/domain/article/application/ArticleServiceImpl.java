@@ -16,14 +16,13 @@ import waveofmymind.wanted.global.error.exception.ArticleNotFoundException;
 public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
-    private final UserService userService;
 
     @Transactional
     @Override
     public Long registerArticle(RegisterArticleCommand command) {
         return articleRepository.saveArticle(command.toEntity()).getId();
     }
-
+    @Transactional
     @Override
     public Long editArticle(EditArticleCommand command) {
         Article article = articleRepository.findArticleById(command.articleId())
