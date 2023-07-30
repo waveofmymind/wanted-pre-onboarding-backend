@@ -20,6 +20,7 @@ public class ArticleFixture {
 
     public static RegisterArticleCommand registerArticleCommand() {
         return RegisterArticleCommand.builder()
+                .userId(1L)
                 .title("title")
                 .content("content")
                 .build();
@@ -32,17 +33,6 @@ public class ArticleFixture {
                 .title("title")
                 .content("content")
                 .build();
-    }
-
-    public static EditArticleRequest editArticleRequest() {
-        return EditArticleRequest.builder()
-                .title("fix title")
-                .content("fix content")
-                .build();
-    }
-
-    public static EditArticleCommand editArticleCommand() {
-        return editArticleRequest().toEditCommand(1L, 1L);
     }
 
     public static List<Article> articleList() {
@@ -62,6 +52,37 @@ public class ArticleFixture {
                 Article.builder()
                         .id(3L)
                         .userId(1L)
+                        .title("title3")
+                        .content("content3")
+                        .build()
+        );
+    }
+
+    public static EditArticleRequest editArticleRequest() {
+        return EditArticleRequest.builder()
+                .title("fix title")
+                .content("fix content")
+                .build();
+    }
+
+    public static EditArticleCommand editArticleCommand() {
+        return editArticleRequest().toEditCommand(1L, 1L);
+    }
+
+    public static List<RegisterArticleCommand> registerArticleCommandList() {
+        return List.of(
+                RegisterArticleCommand.builder()
+                        .userId(2L)
+                        .title("title1")
+                        .content("content1")
+                        .build(),
+                RegisterArticleCommand.builder()
+                        .userId(3L)
+                        .title("title2")
+                        .content("content2")
+                        .build(),
+                RegisterArticleCommand.builder()
+                        .userId(4L)
                         .title("title3")
                         .content("content3")
                         .build()
