@@ -1,4 +1,4 @@
-package waveofmymind.wanted.domain.article.presentation;
+package waveofmymind.wanted.domain.article.integration;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
