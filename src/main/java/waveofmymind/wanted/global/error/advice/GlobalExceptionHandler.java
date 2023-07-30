@@ -13,6 +13,11 @@ import java.util.Set;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(UnIdentifiedUserException.class)
+    protected ResponseEntity<ErrorResponse> unIdentifiedUserException() {
+        return createErrorResponse(ErrorCode.AUTHENTICATION_FAILED);
+    }
+
     @ExceptionHandler(DuplicateJoinException.class)
     protected ResponseEntity<ErrorResponse> duplicateJoinException() {
         return createErrorResponse(ErrorCode.DUPLICATE_JOIN);
