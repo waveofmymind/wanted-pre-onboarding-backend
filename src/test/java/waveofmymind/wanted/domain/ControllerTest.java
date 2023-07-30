@@ -8,8 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import waveofmymind.wanted.domain.article.application.ArticleService;
+
 import waveofmymind.wanted.domain.user.application.UserService;
-import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
@@ -25,5 +26,5 @@ public abstract class ControllerTest {
     protected MockMvc mockMvc;
 
     @MockBean
-    private UserRepository userRepository;
+    protected ArticleService articleService;
 }

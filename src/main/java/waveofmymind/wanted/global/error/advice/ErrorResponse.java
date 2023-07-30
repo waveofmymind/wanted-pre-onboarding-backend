@@ -22,4 +22,14 @@ public class ErrorResponse {
                         .message(errorCode.getMessage())
                         .build());
     }
+
+    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode, String message) {
+        return ResponseEntity
+                .status(errorCode.getStatus().value())
+                .body(ErrorResponse.builder()
+                        .status(errorCode.getStatus().value())
+                        .error(errorCode.getStatus().name())
+                        .message(message)
+                        .build());
+    }
 }

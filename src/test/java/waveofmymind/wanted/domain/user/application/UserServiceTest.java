@@ -5,18 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
+import waveofmymind.wanted.domain.ServiceTest;
+import waveofmymind.wanted.domain.user.application.dto.FindUserResponse;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
 import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
-import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
 import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 import waveofmymind.wanted.global.error.exception.UnIdentifiedUserException;
 import waveofmymind.wanted.global.error.exception.UserNotFoundException;
-import waveofmymind.wanted.global.jwt.JwtTokenProvider;
 import waveofmymind.wanted.global.jwt.LoginToken;
 
 import java.util.Optional;
@@ -29,15 +27,7 @@ import static org.mockito.Mockito.doAnswer;
 import static waveofmymind.wanted.domain.user.UserFixture.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
-
-    @Mock
-    private JwtTokenProvider jwtTokenProvider;
-    @Mock
-    private UserRepository userRepository;
-
-    @InjectMocks
-    private UserServiceImpl userService;
+public class UserServiceTest extends ServiceTest {
 
     @Test
     @DisplayName("회원 가입이 성공한다.")
@@ -106,4 +96,28 @@ public class UserServiceTest {
         assertThatThrownBy(() -> userService.loginUser(request.toCommand()))
                 .isInstanceOf(UnIdentifiedUserException.class);
     }
+
+    @DisplayName("id로 유저를 조회한다.")
+    @Test
+    void getUserById() {
+        //given
+        User user = user();
+        given(userRepository.getUserById(user.getId())).willReturn(Optional.of(user));
+        //when
+        FindUserResponse response = userService.findUser(user.getId());
+        //then
+        assertThat(response.email()).isEqualTo(user.getEmail());
+    }
+
+    @DisplayName("존재하지 않는 id로 유저를 조회하는 경우 예외가 발생한다.")
+    @Test
+    void invalidId() {
+        //given
+        User user = user();
+        given(userRepository.getUserById(user.getId())).willReturn(Optional.empty());
+        //when
+        assertThatThrownBy(() -> userService.findUser(user.getId()))
+                .isInstanceOf(UserNotFoundException.class);
+    }
+
 }

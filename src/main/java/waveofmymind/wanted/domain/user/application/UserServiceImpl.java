@@ -1,8 +1,9 @@
 package waveofmymind.wanted.domain.user.application;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import waveofmymind.wanted.domain.user.application.dto.FindUserResponse;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
 import waveofmymind.wanted.domain.user.application.dto.LoginUserCommand;
@@ -14,12 +15,13 @@ import waveofmymind.wanted.global.jwt.LoginToken;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Transactional
     @Override
     public void joinUser(JoinUserCommand command) {
         if (userRepository.checkDuplicateEmail(command.email())) {
@@ -34,5 +36,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getUserByEmail(command.email()).orElseThrow(UserNotFoundException::new);
         user.authenticate(command.password());
         return jwtTokenProvider.createLoginToken(user);
+    }
+
+    @Override
+    public FindUserResponse findUser(Long userId) {
+        User user = userRepository.getUserById(userId).orElseThrow(UserNotFoundException::new);
+        return FindUserResponse.of(user.getEmail());
     }
 }
