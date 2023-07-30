@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.article.application.ArticleService;
+import waveofmymind.wanted.domain.article.application.dto.FindArticleListResponse;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
 import waveofmymind.wanted.domain.article.presentation.dto.EditArticleRequest;
 import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
@@ -47,7 +48,7 @@ public class ArticleController {
     }
 
     @GetMapping
-    public List<FindArticleResponse> getArticleList(@RequestParam(defaultValue = "0") int page) {
+    public FindArticleListResponse getArticleList(@RequestParam(defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 10);
         return articleService.getArticleList(pageable);
     }

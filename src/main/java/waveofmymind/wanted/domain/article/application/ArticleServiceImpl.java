@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
+import waveofmymind.wanted.domain.article.application.dto.FindArticleListResponse;
 import waveofmymind.wanted.domain.article.application.dto.RegisterArticleCommand;
 import waveofmymind.wanted.domain.article.domain.Article;
 import waveofmymind.wanted.domain.article.infrastructure.ArticleRepository;
@@ -39,13 +40,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<FindArticleResponse> getArticleList(Pageable page) {
-        return articleRepository.findArticleList(page).stream()
+    public FindArticleListResponse getArticleList(Pageable page) {
+        return FindArticleListResponse.of(articleRepository.findArticleList(page).stream()
                 .map(article -> {
                     FindUserResponse response = userService.findUser(article.getUserId());
                     return FindArticleResponse.from(article, response.email());
-                })
-                .collect(Collectors.toList());
+                }).toList());
     }
 
     @Transactional

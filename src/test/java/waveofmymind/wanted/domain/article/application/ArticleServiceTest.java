@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 import waveofmymind.wanted.domain.ServiceTest;
 import waveofmymind.wanted.domain.article.application.dto.EditArticleCommand;
-import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
+import waveofmymind.wanted.domain.article.application.dto.FindArticleListResponse;
 import waveofmymind.wanted.domain.article.application.dto.RegisterArticleCommand;
 import waveofmymind.wanted.domain.article.domain.Article;
 import waveofmymind.wanted.domain.user.domain.User;
@@ -77,7 +77,7 @@ public class ArticleServiceTest extends ServiceTest {
 
     @DisplayName("수정할 제목과 내용으로 게시글을 수정한다.")
     @Test
-    void test() {
+    void editArticleTest() {
         // given
         EditArticleCommand command = editArticleCommand();
         // when
@@ -90,7 +90,7 @@ public class ArticleServiceTest extends ServiceTest {
 
     @DisplayName("수정할 게시글이 없을 경우 예외가 발생한다.")
     @Test
-    void test2() {
+    void editArticleWithoutRegisteredArticle() {
         // given
         EditArticleCommand command = editArticleCommand();
         // when
@@ -102,7 +102,7 @@ public class ArticleServiceTest extends ServiceTest {
 
     @DisplayName("작성자인 경우 게시글을 삭제할 수 있다.")
     @Test
-    void deleteTest() {
+    void deleteArticleTest() {
         // given
         Long articleId = 1L;
         // when
@@ -175,7 +175,7 @@ public class ArticleServiceTest extends ServiceTest {
         given(articleRepository.findArticleList(any(Pageable.class))).willReturn(articles);
         given(userRepository.getUserById(any(Long.class))).willReturn(Optional.of(user()));
         // when
-        List<FindArticleResponse> result = articleService.getArticleList(PageRequest.of(0, 10));
+        FindArticleListResponse result = articleService.getArticleList(PageRequest.of(0, 10));
         // then
         assertThat(result.size()).isEqualTo(articles.size());
         verify(articleRepository).findArticleList(any(Pageable.class));
