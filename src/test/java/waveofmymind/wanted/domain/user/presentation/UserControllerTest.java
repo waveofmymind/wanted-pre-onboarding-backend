@@ -1,7 +1,5 @@
 package waveofmymind.wanted.domain.user.presentation;
 
-
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -30,7 +28,6 @@ public class UserControllerTest extends ControllerTest {
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
         verify(userService).joinUser(request.toCommand());
     }
 
@@ -88,7 +85,7 @@ public class UserControllerTest extends ControllerTest {
         mockMvc.perform(post("/users/login")
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
 
         verify(userService).loginUser(request.toCommand());
     }
