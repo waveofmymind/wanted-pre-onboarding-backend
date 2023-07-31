@@ -2,7 +2,21 @@
 
 지원자: 전상준
 
+### 배포 링크
 
+http://15.165.84.161 
+
+### API 명세서
+
+- 포스트맨: https://documenter.getpostman.com/view/2s9XxtzG1X?version=latest
+
+### 실행 방법
+
+
+```bash
+// 도커 컴포즈 파일 위치에서
+docker-compose up -d
+```
 
 ### 기능 구현 목록
 
