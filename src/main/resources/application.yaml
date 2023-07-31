@@ -6,10 +6,9 @@ spring:
       url: redis://localhost:6379
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://wave-db.c10hd52f1umw.ap-northeast-2.rds.amazonaws.com:3306/wanted?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
     url: ${DB_URL}
-    username: root
-    password: 1234
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     open-in-view: false
