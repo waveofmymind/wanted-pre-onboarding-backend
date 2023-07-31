@@ -1,0 +1,27 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      url: redis://localhost:6379
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://wave-db.c10hd52f1umw.ap-northeast-2.rds.amazonaws.com:3306/wanted?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    url: ${DB_URL}
+    username: root
+    password: 1234
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+
+jwt:
+  secret-key: wanted-pre-onboarding-backendwanted-pre-onboarding-backend wanted-pre-onboarding-backend
+  access-time: 3600000

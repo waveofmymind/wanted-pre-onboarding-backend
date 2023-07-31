@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  database-mysql:
+    container_name: database-mysql
+    image: mysql/mysql-server:8.0
+    restart: always
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: '1234'
+      MYSQL_DATABASE: 'wanted'
+      TZ: 'Asia/Seoul'
+    ports:
+      - "3306:3306"
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    networks:
+      - wanted-network
+  application:
+    container_name: wanted-application
+    image: waveofmymind/wanted:0.1.5
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      DB_URL: 'jdbc:mysql://database-mysql:3306/wanted?autoReconnection=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul'
+    networks:
+      - wanted-network
+    depends_on:
+      - database-mysql
+
+networks:
+  wanted-network:
