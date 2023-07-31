@@ -18,6 +18,10 @@ http://15.165.84.161
 docker-compose up -d
 ```
 
+### 시스템 아키텍처
+
+![스크린샷 2023-07-31 오후 10 57 40](https://github.com/waveofmymind/wanted-pre-onboarding-backend/assets/93868431/766cf1bc-c4ad-437c-a62d-1f5501349867)
+
 ### 기능 구현 목록
 
 - [X] 이메일, 패스워드로 유저를 생성한다.
