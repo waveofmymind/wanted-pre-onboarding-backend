@@ -48,8 +48,9 @@ public class ArticleController {
     }
 
     @GetMapping
-    public FindArticleListResponse getArticleList(@RequestParam(defaultValue = "0") int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+    public FindArticleListResponse getArticleList(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return articleService.getArticleList(pageable);
     }
 }
