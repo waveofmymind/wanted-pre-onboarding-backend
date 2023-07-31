@@ -46,3 +46,10 @@ docker-compose up -d
 - [X] 게시글을 조회할 수 있다.
 - [X] 유저는 게시글 목록을 조회할 수 있다.
 - [X] 게시글 목록 조회시 페이지네이션을 지원한다.
+
+### 테스트
+
+![스크린샷 2023-07-31 오후 10 59 56](https://github.com/waveofmymind/wanted-pre-onboarding-backend/assets/93868431/5c3b2eaa-a8d9-4e89-aabe-5cadb46d2979)
+
+![스크린샷 2023-07-31 오후 11 00 16](https://github.com/waveofmymind/wanted-pre-onboarding-backend/assets/93868431/83039946-39c7-4110-b841-6f2205d4e12c)
+
