@@ -1,7 +1,6 @@
 spring:
   profiles:
     active: prod
-
 jwt:
   secret-key: wanted-pre-onboarding-backendwanted-pre-onboarding-backend wanted-pre-onboarding-backend
   access-time: 3600000
