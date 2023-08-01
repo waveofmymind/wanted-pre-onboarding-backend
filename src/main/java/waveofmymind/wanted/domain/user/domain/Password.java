@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,6 +25,7 @@ import java.util.Objects;
 @JsonDeserialize(using = Password.PasswordDeserializer.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
+    @Column(name = "password")
     private String value;
 
     public Password(String value) {
