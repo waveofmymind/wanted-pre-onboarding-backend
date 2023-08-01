@@ -21,7 +21,7 @@ services:
       - wanted-network
   application:
     container_name: wanted-application
-    image: waveofmymind/wanted:0.1.5
+    image: waveofmymind/wanted:latest
     restart: always
     ports:
       - '8080:8080'
