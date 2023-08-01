@@ -10,6 +10,7 @@ import waveofmymind.wanted.domain.article.application.dto.FindArticleListRespons
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
 import waveofmymind.wanted.domain.article.presentation.dto.EditArticleRequest;
 import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
+import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleResponse;
 import waveofmymind.wanted.domain.user.UserFixture;
 import waveofmymind.wanted.domain.user.domain.User;
 
@@ -34,7 +35,7 @@ public class ArticleIntegrationTest extends IntegrationTest {
         HttpEntity<RegisterArticleRequest> request =
                 new HttpEntity<>(registerArticleRequest(), headers);
 
-        ResponseEntity<Long> response = restTemplate.postForEntity("/articles", request, Long.class);
+        ResponseEntity<RegisterArticleResponse> response = restTemplate.postForEntity("/articles", request, RegisterArticleResponse.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

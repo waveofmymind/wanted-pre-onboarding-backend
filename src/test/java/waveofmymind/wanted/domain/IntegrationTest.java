@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import waveofmymind.wanted.domain.article.ArticleFixture;
 import waveofmymind.wanted.domain.article.application.ArticleService;
 import waveofmymind.wanted.domain.article.domain.Article;
@@ -19,7 +20,7 @@ import waveofmymind.wanted.global.jwt.JwtTokenProvider;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
+@ActiveProfiles("test")
 public abstract class IntegrationTest {
 
     @Autowired

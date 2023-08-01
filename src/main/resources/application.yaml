@@ -1,25 +1,6 @@
 spring:
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      url: redis://localhost:6379
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
-
+  profiles:
+    active: prod
 
 jwt:
   secret-key: wanted-pre-onboarding-backendwanted-pre-onboarding-backend wanted-pre-onboarding-backend

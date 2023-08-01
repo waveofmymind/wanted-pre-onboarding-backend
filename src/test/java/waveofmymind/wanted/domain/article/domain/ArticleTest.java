@@ -2,11 +2,13 @@ package waveofmymind.wanted.domain.article.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import waveofmymind.wanted.domain.article.ArticleFixture;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+@ActiveProfiles("test")
 public class ArticleTest {
 
     @DisplayName("게시글이 생성된다.")

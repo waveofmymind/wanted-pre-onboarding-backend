@@ -2,11 +2,13 @@ package waveofmymind.wanted.domain.user.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import waveofmymind.wanted.global.security.PasswordEncryptor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+@ActiveProfiles("test")
 public class UserTest {
 
     @DisplayName("유저가 생성된다.")
