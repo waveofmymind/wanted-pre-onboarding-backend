@@ -7,15 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.article.application.ArticleService;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleListResponse;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
-import waveofmymind.wanted.domain.article.domain.Article;
 import waveofmymind.wanted.domain.article.presentation.dto.EditArticleRequest;
 import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
 import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleResponse;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.auth.AuthCheck;
 import waveofmymind.wanted.global.auth.UserContext;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
