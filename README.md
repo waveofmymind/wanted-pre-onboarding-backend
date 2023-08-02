@@ -6,6 +6,10 @@
 
 http://15.165.84.161:8080/
 
+### 데모 영상
+
+[https://youtu.be/I9UKuR4JRXs](https://youtu.be/I9UKuR4JRXs)
+
 ### API 명세서
 
 - 포스트맨: https://documenter.getpostman.com/view/2s9XxtzG1X?version=latest
