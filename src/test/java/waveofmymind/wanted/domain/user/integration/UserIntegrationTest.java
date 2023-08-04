@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.*;
 import waveofmymind.wanted.domain.IntegrationTest;
 import waveofmymind.wanted.domain.user.UserFixture;
-import waveofmymind.wanted.domain.user.dto.request.JoinUserRequest;
-import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
+import waveofmymind.wanted.domain.user.presentation.dto.JoinUserRequest;
+import waveofmymind.wanted.domain.user.presentation.dto.LoginUserRequest;
 import waveofmymind.wanted.global.jwt.LoginToken;
+
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,6 +64,6 @@ public class UserIntegrationTest extends IntegrationTest {
         ResponseEntity<LoginToken> response = restTemplate.postForEntity("/users/login", requestEntity, LoginToken.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody().accessToken()).isNotNull();
+        assertThat(Objects.requireNonNull(response.getBody()).accessToken()).isNotNull();
     }
 }

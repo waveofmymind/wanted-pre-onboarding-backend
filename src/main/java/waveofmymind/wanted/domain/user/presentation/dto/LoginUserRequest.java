@@ -1,4 +1,4 @@
-package waveofmymind.wanted.domain.user.dto.request;
+package waveofmymind.wanted.domain.user.presentation.dto;
 
 import lombok.Builder;
 import waveofmymind.wanted.domain.user.domain.Password;

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.user.application.UserService;
 import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
 import waveofmymind.wanted.domain.user.application.dto.LoginUserCommand;
-import waveofmymind.wanted.domain.user.dto.request.JoinUserRequest;
-import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
+import waveofmymind.wanted.domain.user.presentation.dto.JoinUserRequest;
+import waveofmymind.wanted.domain.user.presentation.dto.LoginUserRequest;
 import waveofmymind.wanted.global.jwt.LoginToken;
 
 @RestController

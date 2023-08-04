@@ -11,7 +11,7 @@ import waveofmymind.wanted.domain.ServiceTest;
 import waveofmymind.wanted.domain.user.application.dto.FindUserResponse;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.application.dto.JoinUserCommand;
-import waveofmymind.wanted.domain.user.dto.request.LoginUserRequest;
+import waveofmymind.wanted.domain.user.presentation.dto.LoginUserRequest;
 import waveofmymind.wanted.global.error.exception.DuplicateJoinException;
 import waveofmymind.wanted.global.error.exception.UnIdentifiedUserException;
 import waveofmymind.wanted.global.error.exception.UserNotFoundException;
