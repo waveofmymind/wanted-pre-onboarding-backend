@@ -8,9 +8,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import waveofmymind.wanted.domain.IntegrationTest;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleListResponse;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
-import waveofmymind.wanted.domain.article.presentation.dto.EditArticleRequest;
-import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
-import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleResponse;
+import waveofmymind.wanted.domain.article.presentation.dto.*;
 import waveofmymind.wanted.domain.user.UserFixture;
 import waveofmymind.wanted.domain.user.domain.User;
 
@@ -55,14 +53,14 @@ public class ArticleIntegrationTest extends IntegrationTest {
         HttpEntity<EditArticleRequest> request =
                 new HttpEntity<>(editArticleRequest(), headers);
 
-        ResponseEntity<Long> response = restTemplate.exchange(
+        ResponseEntity<EditArticleResponse> response = restTemplate.exchange(
                 "/articles/" + articleId,
                 HttpMethod.PUT,
                 request,
-                Long.class
+                EditArticleResponse.class
         );
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(articleId);
+        assertThat(Objects.requireNonNull(response.getBody()).articleId()).isEqualTo(articleId);
     }
 
     @DisplayName("게시글 삭제 통합테스트")
@@ -80,14 +78,14 @@ public class ArticleIntegrationTest extends IntegrationTest {
         HttpEntity<EditArticleRequest> request =
                 new HttpEntity<>(editArticleRequest(), headers);
 
-        ResponseEntity<Long> response = restTemplate.exchange(
+        ResponseEntity<DeleteArticleResponse> response = restTemplate.exchange(
                 "/articles/" + articleId,
                 HttpMethod.DELETE,
                 request,
-                Long.class
+                DeleteArticleResponse.class
         );
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo(articleId);
+        assertThat(Objects.requireNonNull(response.getBody()).articleId()).isEqualTo(articleId);
     }
 
     @DisplayName("게시글 조회 통합 테스트")

@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import waveofmymind.wanted.domain.article.application.ArticleService;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleListResponse;
 import waveofmymind.wanted.domain.article.application.dto.FindArticleResponse;
-import waveofmymind.wanted.domain.article.presentation.dto.EditArticleRequest;
-import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleRequest;
-import waveofmymind.wanted.domain.article.presentation.dto.RegisterArticleResponse;
+import waveofmymind.wanted.domain.article.presentation.dto.*;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.global.auth.AuthCheck;
 import waveofmymind.wanted.global.auth.UserContext;
@@ -29,16 +27,16 @@ public class ArticleController {
 
     @AuthCheck
     @PutMapping("/{articleId}")
-    public Long edit(@PathVariable Long articleId, @RequestBody EditArticleRequest request) {
+    public EditArticleResponse edit(@PathVariable Long articleId, @RequestBody EditArticleRequest request) {
         User user = UserContext.currentUser.get();
-        return articleService.editArticle(request.toEditCommand(articleId, user.getId()));
+        return EditArticleResponse.of(articleService.editArticle(request.toEditCommand(articleId, user.getId())));
     }
 
     @AuthCheck
     @DeleteMapping("/{articleId}")
-    public Long delete(@PathVariable Long articleId) {
+    public DeleteArticleResponse delete(@PathVariable Long articleId) {
         User user = UserContext.currentUser.get();
-        return articleService.deleteArticle(articleId, user.getId());
+        return DeleteArticleResponse.of(articleService.deleteArticle(articleId, user.getId()));
     }
 
     @GetMapping("/{articleId}")
