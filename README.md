@@ -77,7 +77,7 @@ public RegisterArticleResponse register(@RequestBody RegisterArticleRequest requ
 
 ### 에러 응답 관리
 
-커스텀 예외처리를 진행하였지만, HttpStatus와 Message에 대한 관리를 한 곳에서 하는 것이 유지보수, 기능 추가에 대해 원할하다고 생각했습니다.
+커스텀 예외처리를 진행하였지만, HttpStatus와 Message에 대한 관리를 한 곳에서 할 수 있도록 하는 것이 유지보수, 기능 확장에 대해 효율적일 것이라고 생각했습니다.
 
 그래서 `ErrorCode`라는 열거형 클래스로 관리할 수 있도록 했습니다.
 
