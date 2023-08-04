@@ -130,7 +130,7 @@ protected ResponseEntity<ErrorResponse> articleNotFoundException(ArticleNotFound
 ### 패스워드 암호화
 
 패스워드를 별도의 클래스로 두어 패스워드 클래스에서 검증 및 자체 암호화, 직렬화 및 역직렬화를 할 수 있도록 했습니다.
-```
+```java
 @Getter
 @Embeddable
 @JsonSerialize(using = Password.PasswordSerializer.class)
