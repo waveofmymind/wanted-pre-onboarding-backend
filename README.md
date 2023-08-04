@@ -25,6 +25,7 @@ http://49.50.173.88:8080
 - [[GET] 게시글 상세 조회](https://github.com/waveofmymind/wanted-pre-onboarding-backend/wiki/%5BGET%5D-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EC%83%81%EC%84%B8-%EC%A1%B0%ED%9A%8C)
 - [[PUT] 게시글 수정](https://github.com/waveofmymind/wanted-pre-onboarding-backend/wiki/%5BPUT%5D-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EC%88%98%EC%A0%95)
 - [[DELETE] 게시글 삭제](https://github.com/waveofmymind/wanted-pre-onboarding-backend/wiki/%5BDELETE%5D-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EC%82%AD%EC%A0%9C)
+- [[GET] 게시글 목록 조회](https://github.com/waveofmymind/wanted-pre-onboarding-backend/wiki/%5BGET%5D-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EB%AA%A9%EB%A1%9D-%EC%A1%B0%ED%9A%8C)
 
 ## 구현 특징
 
