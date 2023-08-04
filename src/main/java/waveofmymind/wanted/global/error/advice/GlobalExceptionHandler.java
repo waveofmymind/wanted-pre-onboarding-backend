@@ -14,13 +14,13 @@ import java.util.Set;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnIdentifiedUserException.class)
-    protected ResponseEntity<ErrorResponse> unIdentifiedUserException() {
-        return createErrorResponse(ErrorCode.AUTHENTICATION_FAILED);
+    protected ResponseEntity<ErrorResponse> unIdentifiedUserException(UnIdentifiedUserException e) {
+        return createErrorResponse(e.getErrorCode());
     }
 
     @ExceptionHandler(DuplicateJoinException.class)
-    protected ResponseEntity<ErrorResponse> duplicateJoinException() {
-        return createErrorResponse(ErrorCode.DUPLICATE_JOIN);
+    protected ResponseEntity<ErrorResponse> duplicateJoinException(DuplicateJoinException e) {
+        return createErrorResponse(e.getErrorCode());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -32,27 +32,27 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidPasswordException.class)
-    protected ResponseEntity<ErrorResponse> invalidPasswordException() {
-        return createErrorResponse(ErrorCode.INVALID_PASSWORD_PARAMETER);
+    protected ResponseEntity<ErrorResponse> invalidPasswordException(InvalidPasswordException e) {
+        return createErrorResponse(e.getErrorCode());
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> userNotFoundException() {
-        return createErrorResponse(ErrorCode.USER_NOT_FOUND);
+    protected ResponseEntity<ErrorResponse> userNotFoundException(UserNotFoundException e) {
+        return createErrorResponse(e.getErrorCode());
     }
 
     @ExceptionHandler(TokenVerifyFailedException.class)
-    protected ResponseEntity<ErrorResponse> tokenVerifyFailedException() {
-        return createErrorResponse(ErrorCode.TOKEN_VERIFY_FAILED);
+    protected ResponseEntity<ErrorResponse> tokenVerifyFailedException(TokenVerifyFailedException e) {
+        return createErrorResponse(e.getErrorCode());
     }
     @ExceptionHandler(ArticleNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> articleNotFoundException() {
-        return createErrorResponse(ErrorCode.ARTICLE_NOT_FOUND);
+    protected ResponseEntity<ErrorResponse> articleNotFoundException(ArticleNotFoundException e) {
+        return createErrorResponse(e.getErrorCode());
     }
 
     @ExceptionHandler(UnAuthorizedException.class)
-    protected ResponseEntity<ErrorResponse> unAuthorizedException() {
-        return createErrorResponse(ErrorCode.UN_AUTHORIZED);
+    protected ResponseEntity<ErrorResponse> unAuthorizedException(UnAuthorizedException e) {
+        return createErrorResponse(e.getErrorCode());
     }
     private ResponseEntity<ErrorResponse> createErrorResponse(ErrorCode errorCode) {
         return ErrorResponse.toResponseEntity(errorCode);
