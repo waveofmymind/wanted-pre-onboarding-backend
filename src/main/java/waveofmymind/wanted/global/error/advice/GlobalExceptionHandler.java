@@ -49,6 +49,11 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ErrorResponse> articleNotFoundException() {
         return createErrorResponse(ErrorCode.ARTICLE_NOT_FOUND);
     }
+
+    @ExceptionHandler(UnAuthorizedException.class)
+    protected ResponseEntity<ErrorResponse> unAuthorizedException() {
+        return createErrorResponse(ErrorCode.UN_AUTHORIZED);
+    }
     private ResponseEntity<ErrorResponse> createErrorResponse(ErrorCode errorCode) {
         return ErrorResponse.toResponseEntity(errorCode);
     }

@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import waveofmymind.wanted.domain.user.domain.User;
 import waveofmymind.wanted.domain.user.infrastructure.UserRepository;
-import waveofmymind.wanted.global.error.exception.TokenVerifyFailedException;
+import waveofmymind.wanted.global.error.exception.UnAuthorizedException;
 import waveofmymind.wanted.global.jwt.JwtVerifier;
 
 @Aspect
@@ -27,12 +27,12 @@ public class AuthCheckAspect {
     public Object authCheck(ProceedingJoinPoint pjp) throws Throwable {
         String authorizationHeader = httpServletRequest.getHeader(AuthConstants.HEADER_STRING.getValue());
         if (authorizationHeader == null || !authorizationHeader.startsWith(AuthConstants.TOKEN_PREFIX.getValue())) {
-            throw new TokenVerifyFailedException();
+            throw new UnAuthorizedException();
         }
         String token = authorizationHeader.replace(AuthConstants.TOKEN_PREFIX.getValue(), "");
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         String email = decodedJWT.getSubject();
-        User user = userRepository.getUserByEmail(email).orElseThrow(TokenVerifyFailedException::new);
+        User user = userRepository.getUserByEmail(email).orElseThrow(UnAuthorizedException::new);
         UserContext.currentUser.set(user);
         return pjp.proceed();
     }
