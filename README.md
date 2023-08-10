@@ -35,6 +35,8 @@ http://49.50.173.88:8080
 
 그래서 AOP를 활용하여 Aspect로 토큰 인증에 대한 관심사를 분리하여 권한 인증이 필요한 메서드에 어노테이션 형식으로 사용할 수 있도록 했습니다.
 
+그리고 접속한 멤버에 대한 정보를 UserContext 클래스에 저장하여, 접속한 유저의 정보를 가져올 수 있도록 했습니다.
+
 ```java
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
